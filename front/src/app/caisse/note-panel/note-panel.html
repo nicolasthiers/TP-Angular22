@@ -1,0 +1,44 @@
+<div class="card ticket">
+  <h2>Note en cours 🧾</h2>
+
+  @if (note.lines().length === 0) {
+    <p class="empty">La note est vide.</p>
+  }
+
+  <ul>
+    @for (line of note.lines(); track $index; let i = $index) {
+      <li>
+        @if (line.kind === 'product') {
+          <span class="label">{{ line.product.name }}</span>
+          <span class="qty">
+            <button class="btn btn-icon" aria-label="Diminuer la quantité" (click)="note.decreaseProduct(line.product.id)">−</button>
+            <span>{{ line.quantity }}</span>
+            <button class="btn btn-icon" aria-label="Augmenter la quantité" [disabled]="!canIncrease(line.product.id, line.product.stock)" (click)="note.addProduct(line.product)">+</button>
+          </span>
+          <span class="subtotal">{{ line.product.price * line.quantity | euros }}</span>
+        } @else {
+          <span class="label">
+            {{ line.formula.name }}
+            <small>{{ line.main.name }}, {{ line.drink.name }}, {{ line.dessert.name }}</small>
+          </span>
+          <span class="qty">1</span>
+          <span class="subtotal">{{ line.formula.price | euros }}</span>
+        }
+        <button class="btn btn-icon" aria-label="Supprimer la ligne" (click)="note.removeLine(i)">🗑</button>
+      </li>
+    }
+  </ul>
+
+  <p class="total">Total <strong>{{ note.total() | euros }}</strong></p>
+
+  <button class="btn btn-success btn-lg" [disabled]="note.lines().length === 0 || paying()" (click)="pay()">
+    Payer {{ note.total() | euros }}
+  </button>
+
+  @if (success(); as msg) {
+    <div class="alert alert-success">{{ msg }}</div>
+  }
+  @if (error(); as msg) {
+    <div class="alert alert-error">{{ msg }}</div>
+  }
+</div>

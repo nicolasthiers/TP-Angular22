@@ -220,10 +220,10 @@ Faites les étapes **dans l'ordre** : chacune s'appuie sur la précédente.
 
 ### Étape 1 — Mise en place
 
-- [ ] Fournir `HttpClient` dans `app.config.ts`.
-- [ ] Générer deux composants « pages » : `LoginPage` et `CaissePage`.
-- [ ] Déclarer les routes : `/login`, `/caisse`. L'URL vide et toute URL inconnue redirigent vers `/caisse`.
-- [ ] Supprimer le message d'accueil de `app.ts`.
+- [x] Fournir `HttpClient` dans `app.config.ts`.
+- [x] Générer deux composants « pages » : `LoginPage` et `CaissePage`.
+- [x] Déclarer les routes : `/login`, `/caisse`. L'URL vide et toute URL inconnue redirigent vers `/caisse`.
+- [x] Supprimer le message d'accueil de `app.ts`.
 
 ✅ **Validation** : http://localhost:4200/login et http://localhost:4200/caisse affichent chacune leur page.
 
@@ -231,17 +231,17 @@ Faites les étapes **dans l'ordre** : chacune s'appuie sur la précédente.
 
 ### Étape 2 — Authentification
 
-- [ ] **`AuthService`**
+- [x] **`AuthService`**
   - `login(login, password)` appelle `POST /api/auth/login` et mémorise le jeton reçu dans un
     `signal` **et** dans le `sessionStorage` (pour rester connecté si on recharge la page).
   - `isLoggedIn` : un `computed` qui indique si un jeton est présent.
   - `logout()` appelle `POST /api/auth/logout` puis oublie le jeton.
-- [ ] **Page de connexion** : formulaire réactif (identifiant + mot de passe, obligatoires).
+- [x] **Page de connexion** : formulaire réactif (identifiant + mot de passe, obligatoires).
   - En cas de succès → redirection vers `/caisse`.
   - En cas d'échec (401) → message « Identifiant ou mot de passe incorrect ».
   - Si le serveur ne répond pas → un message qui l'indique.
-- [ ] **Guard** : `/caisse` n'est accessible qu'aux utilisateurs connectés, sinon redirection vers `/login`.
-- [ ] **Intercepteur** : ajoute l'en-tête `Authorization: Bearer <jeton>` à chaque requête. Si une réponse
+- [x] **Guard** : `/caisse` n'est accessible qu'aux utilisateurs connectés, sinon redirection vers `/login`.
+- [x] **Intercepteur** : ajoute l'en-tête `Authorization: Bearer <jeton>` à chaque requête. Si une réponse
   est un **401** (hors login), il efface le jeton et renvoie vers `/login`.
 
 ✅ **Validation** : impossible d'afficher `/caisse` sans se connecter ; avec `caisse` / `caisse` on arrive sur la caisse ;
@@ -252,15 +252,15 @@ après un redémarrage du serveur, la première requête renvoie sur `/login`.
 
 ### Étape 3 — Le catalogue
 
-- [ ] **`CatalogService`** : `getProducts()` et `getFormulas()`.
-- [ ] Un **pipe `euros`** qui transforme des centimes en texte : `{{ 850 | euros }}` → `8,50 €`.
-- [ ] La page caisse charge les produits dans un `signal` et les affiche **par catégorie**
+- [x] **`CatalogService`** : `getProducts()` et `getFormulas()`.
+- [x] Un **pipe `euros`** qui transforme des centimes en texte : `{{ 850 | euros }}` → `8,50 €`.
+- [x] La page caisse charge les produits dans un `signal` et les affiche **par catégorie**
   (Burgers, Paninis, Boissons, Desserts), à l'aide de `CATEGORIES`.
-- [ ] Un composant **`ProductCard`** :
+- [x] Un composant **`ProductCard`** :
   - entrées (`input()`) : le produit et le **stock disponible** ;
   - sortie (`output()`) : émet le produit quand on clique dessus ;
   - affiche l'icône, le nom, le prix et le stock.
-- [ ] Un produit **hors stock** reste **visible** mais est **grisé**, porte la mention « Hors stock » et
+- [x] Un produit **hors stock** reste **visible** mais est **grisé**, porte la mention « Hors stock » et
   **n'est pas cliquable**.
 
 ✅ **Validation** : les 15 produits s'affichent ; Veggie Burger, Panini Poulet-Pesto et Tiramisu sont
@@ -273,14 +273,14 @@ visibles mais désactivés.
 
 La note est construite **dans le navigateur** : rien n'est envoyé au serveur avant le paiement.
 
-- [ ] **`NoteService`** (état partagé, avec des signals) :
+- [x] **`NoteService`** (état partagé, avec des signals) :
   - la liste des lignes de la note ;
   - `total` : un `computed` ;
   - ajouter un produit (cliquer deux fois sur le même produit donne **une** ligne de quantité 2) ;
   - diminuer la quantité, supprimer une ligne, vider la note.
-- [ ] Un composant **`NotePanel`** (le ticket) : chaque ligne avec son libellé, son prix, sa quantité
+- [x] Un composant **`NotePanel`** (le ticket) : chaque ligne avec son libellé, son prix, sa quantité
   (boutons − et +), son sous-total et un bouton de suppression ; le total en bas.
-- [ ] Le **stock affiché tient compte de la note** : si Cookie a un stock de 2 et que 2 cookies sont
+- [x] Le **stock affiché tient compte de la note** : si Cookie a un stock de 2 et que 2 cookies sont
   déjà dans la note, la carte Cookie affiche « Hors stock » et n'est plus cliquable. Le bouton « + »
   du ticket est désactivé dans ce cas.
 
@@ -294,15 +294,15 @@ pas mettre dans la note plus que le stock.
 
 ### Étape 5 — Les formules
 
-- [ ] Afficher les 2 formules (nom, composition, prix) au-dessus du catalogue.
-- [ ] Un clic sur une formule ouvre un composant **`FormulaPicker`** (une fenêtre par-dessus la page) :
+- [x] Afficher les 2 formules (nom, composition, prix) au-dessus du catalogue.
+- [x] Un clic sur une formule ouvre un composant **`FormulaPicker`** (une fenêtre par-dessus la page) :
   - choisir **un** produit de la catégorie principale (burger **ou** panini selon la formule),
     **une** boisson et **un** dessert ;
   - les produits indisponibles sont visibles mais non sélectionnables ;
   - « Ajouter à la note » n'est actif que lorsque les 3 choix sont faits ; « Annuler » ferme la fenêtre.
-- [ ] Dans la note, une formule est **une ligne** : son nom, le détail des 3 produits choisis et son prix fixe.
-- [ ] Les 3 produits d'une formule **comptent dans les stocks** réservés par la note.
-- [ ] Une formule est désactivée si l'une de ses 3 catégories n'a plus aucun produit disponible.
+- [x] Dans la note, une formule est **une ligne** : son nom, le détail des 3 produits choisis et son prix fixe.
+- [x] Les 3 produits d'une formule **comptent dans les stocks** réservés par la note.
+- [x] Une formule est désactivée si l'une de ses 3 catégories n'a plus aucun produit disponible.
 
 ✅ **Validation** : Formule Burger (Bacon Burger, Limonade, Brownie) apparaît dans la note à 13,50 € et
 les stocks affichés de ces 3 produits diminuent de 1.
@@ -312,14 +312,14 @@ les stocks affichés de ces 3 produits diminuent de 1.
 
 ### Étape 6 — Le paiement
 
-- [ ] **`OrderService.pay(request)`** : `POST /api/orders`.
-- [ ] Convertir la note en `OrderRequest` (produits + formules, avec seulement les identifiants).
-- [ ] Bouton **« Payer 40,00 € »**, désactivé si la note est vide ou si un paiement est en cours.
-- [ ] Après un paiement réussi :
+- [x] **`OrderService.pay(request)`** : `POST /api/orders`.
+- [x] Convertir la note en `OrderRequest` (produits + formules, avec seulement les identifiants).
+- [x] Bouton **« Payer 40,00 € »**, désactivé si la note est vide ou si un paiement est en cours.
+- [x] Après un paiement réussi :
   - afficher « Note n°X payée : Y € » ;
   - **vider** la note ;
   - **recharger** les produits (les stocks ont changé) et les totaux par jour.
-- [ ] En cas d'erreur (ex. **409** stock insuffisant) : afficher le `message` renvoyé par le serveur et
+- [x] En cas d'erreur (ex. **409** stock insuffisant) : afficher le `message` renvoyé par le serveur et
   recharger les produits.
 
 ✅ **Validation** : après paiement, les stocks affichés ont diminué. Pour provoquer un 409 : mettez 3
@@ -327,19 +327,19 @@ limonades dans la note, payez 1 limonade depuis un second onglet, puis payez dan
 
 ### Étape 7 — Les recettes
 
-- [ ] Charger `GET /api/orders/daily-totals`.
-- [ ] Un composant **`DailyTotals`** : un tableau jour / nombre de notes / total, pour **chaque jour**
+- [x] Charger `GET /api/orders/daily-totals`.
+- [x] Un composant **`DailyTotals`** : un tableau jour / nombre de notes / total, pour **chaque jour**
   (la base de départ contient déjà l'historique des 3 jours précédents). La ligne du jour est mise en
   évidence.
-- [ ] Le **total du jour** est affiché en permanence dans l'en-tête de la caisse.
-- [ ] Les deux se mettent à jour après chaque paiement.
+- [x] Le **total du jour** est affiché en permanence dans l'en-tête de la caisse.
+- [x] Les deux se mettent à jour après chaque paiement.
 
 > 💡 `{{ day | date: 'EEEE d MMMM' }}` → « dimanche 27 septembre ».
 > Le total du jour est un `computed` sur la liste des totaux.
 
 ### Étape 8 — Déconnexion
 
-- [ ] Un bouton **« Se déconnecter »** dans l'en-tête : appelle `POST /api/auth/logout`, oublie le
+- [x] Un bouton **« Se déconnecter »** dans l'en-tête : appelle `POST /api/auth/logout`, oublie le
   jeton, vide la note et revient sur `/login`.
 
 ✅ **Validation** : après déconnexion, `/caisse` renvoie vers `/login`, et l'ancien jeton est refusé par

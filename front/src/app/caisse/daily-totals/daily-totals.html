@@ -1,0 +1,17 @@
+<div class="card">
+  <h2>Recettes 📈</h2>
+  <table>
+    <thead>
+      <tr><th>Jour</th><th>Notes</th><th>Total</th></tr>
+    </thead>
+    <tbody>
+      @for (t of totals(); track t.day) {
+        <tr [class.today]="t.day === today()">
+          <td>{{ t.day | date: 'EEEE d MMMM' }}</td>
+          <td>{{ t.orderCount }}</td>
+          <td>{{ t.total | euros }}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

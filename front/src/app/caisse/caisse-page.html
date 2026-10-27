@@ -1,0 +1,49 @@
+<header class="topbar">
+    <h1>🍔 YummyComponents</h1>
+    <span class="day-total">Total du jour : <strong>{{ todayTotal() | euros }}</strong></span>
+    <button class="btn btn-ghost" (click)="logout()">Se déconnecter</button>
+</header>
+
+<div class="layout">
+    <main>
+        <section>
+            <h2>Formules ⭐</h2>
+            <div class="grid formulas">
+                @for (formula of formulas(); track formula.id) {
+                    <button class="card formula" [disabled]="!isFormulaAvailable(formula)" (click)="onFormulaClick(formula)">
+                        <h3>{{ formula.name }}</h3>
+                        <p>{{ formula.mainCategory === 'BURGER' ? 'Burger' : 'Panini' }} + boisson + dessert</p>
+                        <p class="price">{{ formula.price | euros }}</p>
+                    </button>
+                }
+            </div>
+        </section>
+
+        @for (cat of categories; track cat.code) {
+            <section>
+                <h2>{{ cat.label }} {{ cat.icon }}</h2>
+                <div class="grid">
+                    @for (product of products(); track product.id) {
+                        @if (product.category === cat.code) {
+                            <app-product-card [product]="product" [stock]="availableStock(product)" (select)="onSelect($event)"/>
+                        }
+                    }
+                </div>
+            </section>
+        }
+    </main>
+
+    <aside>
+        <app-note-panel (settled)="reload()" />
+        <app-daily-totals [totals]="dailyTotals()" [today]="today" />
+    </aside>
+</div>
+
+@if (openedFormula(); as formula) {
+    <app-formula-picker
+        [formula]="formula"
+        [products]="availableProducts()"
+        (confirm)="onFormulaConfirm($event)"
+        (cancel)="onFormulaCancel()"
+    />
+}

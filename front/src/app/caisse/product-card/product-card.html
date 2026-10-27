@@ -1,0 +1,11 @@
+<button class="card product-card" [class.sold-out]="stock() === 0" [disabled]="stock() === 0" (click)="onClick()">
+    <span class="icon">{{ icon() }}</span>
+    <h3>{{ product().name }}</h3>
+    <p class="price">{{ product().price | euros }}</p>
+
+    @if (stock() === 0) {
+        <span class="badge badge-danger">Hors stock</span>
+    } @else {
+        <span class="badge">Stock : {{ stock() }}</span>
+    }
+</button>

@@ -1,0 +1,91 @@
+:host {
+  display: block;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1.5rem;
+  background: var(--color-surface);
+  box-shadow: var(--shadow);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.topbar h1 {
+  font-size: 1.4rem;
+  margin-right: auto;
+}
+
+.day-total strong {
+  color: var(--color-success-dark);
+  font-size: 1.15rem;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  align-items: start;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+section h2 {
+  margin-bottom: 0.75rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 0.75rem;
+}
+
+.grid.formulas {
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+}
+
+.formula {
+  text-align: left;
+  border: 2px solid var(--color-accent);
+  background: var(--color-accent-light);
+}
+
+.formula p {
+  margin: 0.25rem 0 0;
+}
+
+.formula:disabled {
+  opacity: 0.5;
+  filter: grayscale(1);
+}
+
+.price {
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+aside {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  position: sticky;
+  top: 4.5rem;
+}
+
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  aside {
+    position: static;
+  }
+}

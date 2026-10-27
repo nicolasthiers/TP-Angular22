@@ -1,0 +1,38 @@
+<div class="card picker" role="dialog" aria-modal="true">
+    <h2>{{ formula().name }} - {{ formula().price | euros }}</h2>
+
+    <h3>Plat</h3>
+    <div class="choices">
+        @for (product of mains(); track product.id) {
+            <button class="btn"
+                [disabled]="product.stock === 0"
+                [class.selected]="selectedMain()?.id === product.id"
+                (click)="selectMain(product)">{{ product.name }}</button>
+        }
+    </div>
+
+    <h3>Boisson</h3>
+    <div class="choices">
+        @for (product of drinks(); track product.id) {
+            <button class="btn"
+                [disabled]="product.stock === 0"
+                [class.selected]="selectedDrink()?.id === product.id"
+                (click)="selectDrink(product)">{{ product.name }}</button>
+        }
+    </div>
+
+    <h3>Dessert</h3>
+    <div class="choices">
+        @for (product of desserts(); track product.id) {
+            <button class="btn"
+                [disabled]="product.stock === 0"
+                [class.selected]="selectedDessert()?.id === product.id"
+                (click)="selectDessert(product)">{{ product.name }}</button>
+        }
+    </div>
+
+    <div class="actions">
+        <button class="btn btn-ghost" (click)="onCancel()">Annuler</button>
+        <button class="btn btn-primary" [disabled]="!canConfirm()" (click)="onConfirm()">Ajouter à la note</button>
+    </div>
+</div>
